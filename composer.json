@@ -1,0 +1,24 @@
+{
+	"keywords" : [
+		"radical-php"
+	],
+	"autoload" : {
+		"psr-0" : {
+			"Splitice" : "src"
+		}
+	},
+	"name" : "splitice/radical-resque-mysql",
+	"type" : "library",
+	"require" : {
+		"php" : ">=5.4",
+		"php-resque/resque": "dev-master",
+		"splitice/radical-db" : "dev-master"
+	},
+	"minimum-stability" : "dev",
+	"repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:splitice/resque.git"
+    }
+	]
+}
