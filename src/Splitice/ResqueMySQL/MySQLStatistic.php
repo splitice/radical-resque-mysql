@@ -63,7 +63,7 @@ class MySQLStatistic implements
      */
     public function clear($stat)
     {
-    	MySQLStatistic::clear($stat);
+    	//MySQLStatistic::clear($stat);
     	return true;
     }
 

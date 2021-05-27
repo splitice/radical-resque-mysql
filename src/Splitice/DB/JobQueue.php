@@ -18,4 +18,5 @@ class JobQueue extends Table
 	protected $owner;
 	protected $queue;
 	protected $queued;
+	protected $created;
 }

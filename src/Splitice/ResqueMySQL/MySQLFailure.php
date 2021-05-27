@@ -3,6 +3,7 @@
 namespace Splitice\ResqueMySQL;
 
 use Radical\Database\Model\TableReferenceInstance;
+use Resque\Component\Core\Exception\ResqueException;
 use Resque\Component\Job\Model\JobInterface;
 use Resque\Component\Queue\Model\OriginQueueAwareInterface;
 use Resque\Component\Queue\Model\QueueInterface;
@@ -31,8 +32,9 @@ class MySQLFailure implements FailureInterface
     {
         $queue = ($job instanceof OriginQueueAwareInterface) ? $job->getOriginQueue() : null;
 
-        $j = $this->table->fromId($job->getId());
-		$j->setFailure(json_encode(
+        $j = $this->table->fromId($job->_mysqlId);
+        if(!$j) throw new ResqueException('Unable to find job with id '.$job->_mysqlId);
+		$j->setFailed(json_encode(
 			array(
 				'failed_at' => date('c'),
 				'payload' => $job,
@@ -43,7 +45,7 @@ class MySQLFailure implements FailureInterface
 				'queue' => ($queue instanceof QueueInterface) ? $queue->getName() : null,
 			)
 		));
-		$j->setUpdated(\Radical\DB::toTimeStamp(time()));
+		$j->setCreated(\Radical\DB::toTimeStamp(time()));
 		$j->update();
     }
 
